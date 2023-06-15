@@ -37,7 +37,7 @@ class Notes2(Resource):
 class Notes3(Resource):
     def get(self):
         return {
-            "status": "spk",
+            "status": "forever young, i wanna be, forever youuung",
             "data": "jakies dane"
         }
 
