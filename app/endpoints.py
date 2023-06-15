@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
 
-from services import NotesServices
+# from services import NotesServices
 
 
 class Notes(Resource):
@@ -15,9 +15,9 @@ class Notes(Resource):
         data = request.get.json()
         return {
             "status": "ok",
-            "data": "tutaj powinny siê znaleœæ wys³ane dane"
+            "data": data
         }
-   
+
 
 class Notes2(Resource):
     def get(self):
@@ -30,7 +30,7 @@ class Notes2(Resource):
         data = request.get.json()
         return {
             "status": "git",
-            "data": "mo¿e kiedyœ znajd¹ siê tutaj jakieœ dane"
+            "data": data
         }
 
 
@@ -45,5 +45,5 @@ class Notes3(Resource):
         data = request.get.json()
         return {
             "status": "forever young, i wanna be, forever youuung",
-            "data": "Do you really want to live forever?"
+            "data": data
         }
