@@ -1,49 +1,35 @@
-from flask import request
+# from flask import request
 from flask_restful import Resource
 
 # from services import NotesServices
 
+notes = []
+
+
+class NotesList(Resource):
+    def get(self):
+        return {
+            "message": "Lista notatek",
+        }
+
+    def post(self):
+        return {
+            "message": "Dodaj notatkê"
+        }
+
 
 class Notes(Resource):
-    def get(self):
+    def get(self, note_id):
         return {
-            "status": "ok",
-            "data": "jakies dane"
+            "message": f"Pobierz informacje o notatce {note_id}"
         }
 
-    def post(self):
-        data = request.get.json()
+    def patch(self, note_id):
         return {
-            "status": "ok",
-            "data": data
+            "message": f"Zaktualizuj rekord {note_id}"
         }
 
-
-class Notes2(Resource):
-    def get(self):
+    def delete(self, note_id):
         return {
-            "status": "git",
-            "data": "jakies dane siê tutaj znajduj¹"
-        }
-
-    def post(self):
-        data = request.get.json()
-        return {
-            "status": "git",
-            "data": data
-        }
-
-
-class Notes3(Resource):
-    def get(self):
-        return {
-            "status": "forever young, i wanna be, forever youuung",
-            "data": "jakies dane"
-        }
-
-    def post(self):
-        data = request.get.json()
-        return {
-            "status": "forever young, i wanna be, forever youuung",
-            "data": data
+            "message": f"Usuñ notatkê {note_id}"
         }

@@ -1,9 +1,6 @@
 from .init import api
-from .endpoints import Notes, Notes2, Notes3
+from .endpoints import Notes, NotesList
 
 
-api.add_resource(Notes, '/')
-
-api.add_resource(Notes2, "/2")
-
-api.add_resource(Notes3, "/3")
+api.add_resource(Notes, '/notes/<int:note_id')
+api.add_resource(NotesList, '/notes')
