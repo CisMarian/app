@@ -3,8 +3,6 @@ from flask_restful import Resource
 
 # from services import NotesServices
 
-notes = []
-
 
 class NotesList(Resource):
     def get(self):
