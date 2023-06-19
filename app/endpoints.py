@@ -4,7 +4,7 @@ from flask_restful import Resource
 # from services import NotesServices
 
 
-class NotesList(Resource):
+class Notes(Resource):
     def get(self):
         return {
             "message": "Lista notatek",
@@ -16,7 +16,7 @@ class NotesList(Resource):
         }
 
 
-class Notes(Resource):
+class Note(Resource):
     def get(self, note_id):
         return {
             "message": f"Pobierz informacje o notatce {note_id}"
