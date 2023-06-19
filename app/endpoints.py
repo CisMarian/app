@@ -60,3 +60,32 @@ class Profile(Resource):
         return {
             "message": "UsuÅ„ uÅ¼ytkownika {}".format(user_id)
         }
+
+
+class Users(Resource):
+    def get(self):
+        return {
+            "message": "Lista u¿ytkowników",
+        }
+
+    def post(self):
+        return {
+            "message": "Dodaj u¿ytkownika"
+        }
+
+
+class Profile(Resource):
+    def get(self, user_id):
+        return {
+            "message": f"Pobierz informacje o u¿ytkowniku {user_id}"
+        }
+
+    def patch(self, user_id):
+        return {
+            "message": f"Zaktualizuj profil u¿ytkownika {user_id}"
+        }
+
+    def delete(self, user_id):
+        return {
+            "message": f"Usuñ u¿ytkownika {user_id}"
+        }
