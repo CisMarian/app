@@ -4,7 +4,7 @@ from flask_restful import Resource
 # from services import NotesServices
 
 
-class NotesList(Resource):
+class Notes(Resource):
     def get(self):
         return {
             "message": "Lista notatek",
@@ -16,7 +16,7 @@ class NotesList(Resource):
         }
 
 
-class Notes(Resource):
+class Note(Resource):
     def get(self, note_id):
         return {
             "message": f"Pobierz informacje o notatce {note_id}"
@@ -30,4 +30,33 @@ class Notes(Resource):
     def delete(self, note_id):
         return {
             "message": f"Usuñ notatkê {note_id}"
+        }
+
+
+class Users(Resource):
+    def get(self):
+        return {
+            "message": "Lista u¿ytkowników",
+        }
+
+    def post(self):
+        return {
+            "message": "Dodaj u¿ytkownika"
+        }
+
+
+class Profile(Resource):
+    def get(self, user_id):
+        return {
+            "message": f"Pobierz informacje o u¿ytkowniku {user_id}"
+        }
+
+    def patch(self, user_id):
+        return {
+            "message": f"Zaktualizuj profil u¿ytkownika {user_id}"
+        }
+
+    def delete(self, user_id):
+        return {
+            "message": f"Usuñ u¿ytkownika {user_id}"
         }
