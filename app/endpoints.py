@@ -31,3 +31,32 @@ class Note(Resource):
         return {
             "message": f"Usuñ notatkê {note_id}"
         }
+
+
+class Users(Resource):
+    def get(self):
+        return {
+            "message": "Lista u¿ytkowników"
+        }
+
+    def post(self):
+        return {
+            "message": "Dodaj u¿ytkownika"
+        }
+
+
+class Profile(Resource):
+    def get(self, user_id):
+        return {
+            "message": f"Informacje o u¿ytkowniku {user_id}"
+        }
+
+    def patch(self, user_id):
+        return {
+            "message": f"Edytuj dane u¿ytkownika {user_id}"
+        }
+
+    def delete(self, user_id):
+        return {
+            "message": f"Usuñ u¿ytkownika {user_id}"
+        }
