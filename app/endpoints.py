@@ -12,7 +12,7 @@ class Notes(Resource):
 
     def post(self):
         return {
-            "message": "Dodaj notatkê"
+            "message": "Dodaj notatkÄ™"
         }
 
 
@@ -29,34 +29,34 @@ class Note(Resource):
 
     def delete(self, note_id):
         return {
-            "message": f"Usuñ notatkê {note_id}"
+            "message": f"UsuÅ„ notatkÄ™ {note_id}"
         }
 
 
 class Users(Resource):
     def get(self):
         return {
-            "message": "Lista u¿ytkowników",
+            "message": "Lista uÅ¼ytkownikÃ³w",
         }
 
     def post(self):
         return {
-            "message": "Dodaj u¿ytkownika"
+            "message": "Dodaj uÅ¼ytkownika"
         }
 
 
 class Profile(Resource):
     def get(self, user_id):
         return {
-            "message": f"Pobierz informacje o u¿ytkowniku {user_id}"
+            "message": f"Pobierz informacje o uÅ¼ytkowniku {user_id}"
         }
 
     def patch(self, user_id):
         return {
-            "message": f"Zaktualizuj profil u¿ytkownika {user_id}"
+            "message": f"Zaktualizuj profil uÅ¼ytkownika {user_id}"
         }
 
     def delete(self, user_id):
         return {
-            "message": f"Usuñ u¿ytkownika {user_id}"
+            "message": f"UsuÅ„ uÅ¼ytkownika {user_id}"
         }
