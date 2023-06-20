@@ -5,16 +5,20 @@ class Database:
     def __init__(self):
         self.files = {}
 
-    def create(self, name_space):
-        if name_space in self.files:
+    def use(self, name_space):
+        self.name_space = name_space
+
+    def create(self):
+        if self.name_space in self.files:
             return False
         else:
-            self.files[name_space] = []
+            self.files[self.name_space] = []
+            self._save_file(self.name_space)
             return True
 
     def add(self, name_space, fields):
         if name_space in fields:
-            return -1
+            raise OSError("Namespace already exist!")
 
         records = self.files[name_space]
         if len(records) == 0:
@@ -45,12 +49,12 @@ class Database:
 
         return self.files[name_space]
 
-    def get_by_id_1(self, name_space):
+    def get_by_id(self, name_space, record_id):
         if name_space not in self.files:
             return []
 
         for record in self.files[name_space]:
-            if record['id'] == 1:
+            if record['id'] == record_id:
                 return [record]
 
         return []
