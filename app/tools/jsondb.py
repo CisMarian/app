@@ -7,9 +7,6 @@ class Database:
         self.files = {}
         self.create()
 
-    def use(self, name_space):
-        self.name_space = name_space
-
     def create(self):
         if self.name_space in self.files:
             return False
