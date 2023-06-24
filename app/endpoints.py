@@ -5,7 +5,6 @@ from flask_restful import Resource
 
 
 class Notes(Resource):
-class Notes(Resource):
     def get(self):
         return {
             "message": "Lista notatek",
@@ -14,11 +13,9 @@ class Notes(Resource):
     def post(self):
         return {
             "message": "Dodaj notatkę"
-            "message": "Dodaj notatkę"
         }
 
 
-class Note(Resource):
 class Note(Resource):
     def get(self, note_id):
         return {
