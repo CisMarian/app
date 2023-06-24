@@ -7,6 +7,9 @@ class Database:
         self.files = {}
         self.create()
 
+    def use(self, name_space):
+        self.name_space = name_space
+
     def create(self):
         if self.name_space in self.files:
             return False
@@ -53,7 +56,6 @@ class Database:
             return []
 
         for record in self.files[name_space]:
-
             if record['id'] == record_id:
                 return [record]
 
