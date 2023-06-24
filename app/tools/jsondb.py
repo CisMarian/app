@@ -2,19 +2,26 @@ import json
 
 
 class Database:
-    def __init__(self):
+    def __init__(self, name_space):
+        self.name_space = name_space
         self.files = {}
+        self.create()
 
-    def create(self, name_space):
-        if name_space in self.files:
+    def create(self):
+        if self.name_space in self.files:
             return False
         else:
-            self.files[name_space] = []
+            self.files[self.name_space] = []
+            self._save_file(self.name_space)
             return True
 
     def add(self, name_space, fields):
         if name_space in fields:
+<<<<<<< HEAD
             return -1
+=======
+            raise OSError("Namespace already exist!")
+>>>>>>> 0ccbc45 (add jsondb extension)
 
         records = self.files[name_space]
         if len(records) == 0:
@@ -45,12 +52,20 @@ class Database:
 
         return self.files[name_space]
 
+<<<<<<< HEAD
     def get_by_id_1(self, name_space):
+=======
+    def get_by_id(self, name_space, record_id):
+>>>>>>> 0ccbc45 (add jsondb extension)
         if name_space not in self.files:
             return []
 
         for record in self.files[name_space]:
+<<<<<<< HEAD
             if record['id'] == 1:
+=======
+            if record['id'] == record_id:
+>>>>>>> 0ccbc45 (add jsondb extension)
                 return [record]
 
         return []
