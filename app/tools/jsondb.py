@@ -12,7 +12,7 @@ class Database:
         self._save_file()
         return True
 
-    def add(self, name_space, fields):
+    def add(self, fields):
         records = self.files[self.name_space]
         if len(records) == 0:
             new_id = 1
@@ -24,7 +24,7 @@ class Database:
         self._save_file()
         return new_id
 
-    def delete(self, name_space, record_id):
+    def delete(self, record_id):
         records = self.files[self.name_space]
         for record in records:
             if record['id'] == record_id:
@@ -53,15 +53,21 @@ class Database:
 
         return False
 
-    def _load_file(self, name_space):
-        filename = f'{name_space}.json'
+    def _load_file(self):
+        filename = self._get_file_name(self.name_space)
         try:
             with open(filename, 'r') as file:
-                self.files[name_space] = json.load(file)
+                self.files[self.name_space] = json.load(file)
         except FileNotFoundError:
-            self.files[name_space] = []
+            self.files[self.name_space] = []
 
-    def _save_file(self, name_space):
-        filename = f'{name_space}.json'
-        with open(filename, 'w') as file:
-            json.dump(self.files[name_space], file, indent=2)
+    def _save_file(self):
+        filename = self._get_file_name(self.name_space)
+        try:
+            with open(filename, 'w') as file:
+                json.dump(self.files[self.name_space], file, indent=2)
+        except FileExistsError:
+            FileExistsError("Plik {} już istnieje.".format(filename))
+
+    def _get_file_name(self):
+        return '.'.join([self.name_space, 'json'])
