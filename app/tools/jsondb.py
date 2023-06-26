@@ -54,7 +54,7 @@ class Database:
         return False
 
     def _load_file(self):
-        filename = self._get_file_name(self.name_space)
+        filename = self._get_file_name()
         try:
             with open(filename, 'r') as file:
                 self.files[self.name_space] = json.load(file)
@@ -62,12 +62,12 @@ class Database:
             self.files[self.name_space] = []
 
     def _save_file(self):
-        filename = self._get_file_name(self.name_space)
+        filename = self._get_file_name()
         try:
             with open(filename, 'w') as file:
                 json.dump(self.files[self.name_space], file, indent=2)
-        except FileExistsError:
-            FileExistsError("Plik {} już istnieje.".format(filename))
+        except OSError:
+            OSError("Plik {} już istnieje.".format(filename))
 
     def _get_file_name(self):
         return '.'.join([self.name_space, 'json'])
