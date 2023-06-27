@@ -1,57 +1,38 @@
-import json
+from tools.jsondb import Database
 
 
 class Services:
+    def __init__(self):
+        self.db = Database('namespace')
+
     def save_user(self, fields: dict):
-        users = self._load_users()
         user_id = fields.get('id')
+        users = self.db.get_all()
 
         if user_id:
             for user in users:
                 if user['id'] == user_id:
                     break
-
         else:
             user_id = self._generate_user_id(users)
             fields['id'] = user_id
-            users.append(fields)
-
-        self._save_users(users)
+            self.db.add(fields)
 
     def get_users(self, ident=None):
-        users = self._load_users()
-
         if ident:
-            return list(filter(lambda user: user['id'] == ident, users))
-
-        return users
+            return self.db.get_by_id(ident)
+        else:
+            return self.db.get_all()
 
     def patch_user(self, user_id, updated_fields):
-        users = self._load_users()
+        users = self.db.get_all()
         for user in users:
             if user['id'] == user_id:
                 user.update(updated_fields)
-                break
-        self._save_users(users)
+                self.db.update(user)
 
     def delete_user(self, ident):
-        users = self._load_users()
-        updated_users = list(filter(lambda user: user['id'] != ident, users))
-        self._save_users(updated_users)
-
-    def _load_users(self):
-        try:
-            with open('users.json', 'r') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            return []
-
-    def _save_users(self, users):
-        try:
-            with open('users.json', 'w') as f:
-                json.dump(users, f)
-        except FileNotFoundError:
-            return []
+        self.db.delete(ident)
 
     def _generate_user_id(self, users):
         if not users:
@@ -61,52 +42,33 @@ class Services:
         return max_id + 1
 
     def save_note(self, fields: dict):
-        notes = self._load_notes()
         note_id = fields.get('id')
+        notes = self.db.get_all()
 
         if note_id:
             for note in notes:
                 if note['id'] == note_id:
                     break
-
         else:
             note_id = self._generate_note_id()
             fields['id'] = note_id
-            notes.append(fields)
-
-        self._save_notes(notes)
+            self.db.add(fields)
 
     def get_notes(self, ident=None):
-        notes = self._load_notes()
-
         if ident:
-            return list(filter(lambda note: note['id'] == ident, notes))
-
-        return notes
+            return self.db.get_by_id(ident)
+        else:
+            return self.db.get_all()
 
     def patch_note(self, note_id, updated_fields):
-        notes = self._load_notes()
+        notes = self.db.get_all()
         for note in notes:
             if note['id'] == note_id:
                 note.update(updated_fields)
-                break
-        self._save_notes(notes)
+                self.db.update(note)
 
     def delete_notes(self, ident):
-        notes = self._load_notes()
-        updated_notes = list(filter(lambda note: note['id'] != ident, notes))
-        self._save_notes(updated_notes)
-
-    def _load_notes(self):
-        try:
-            with open('notes.json', 'r') as f:
-                return json.load(f)
-        except FileNotFoundError:
-            return []
-
-    def _save_notes(self, notes):
-        with open('notes.json', 'w') as f:
-            json.dump(notes, f)
+        self.db.delete(ident)
 
     def _generate_note_id(self, notes):
         if not notes:
