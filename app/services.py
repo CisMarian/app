@@ -2,9 +2,6 @@ from tools.jsondb import Database
 
 
 class Services:
-    def __init__(self):
-        self.db = Database()
-
     def save_user(self, fields: dict):
         db = Database('users')
         if fields.get('id'):
