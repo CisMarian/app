@@ -3,76 +3,62 @@ from tools.jsondb import Database
 
 class Services:
     def __init__(self):
-        self.db = Database('namespace')
+        self.db = Database()
 
     def save_user(self, fields: dict):
-        user_id = fields.get('id')
-        users = self.db.get_all()
-
-        if user_id:
-            for user in users:
-                if user['id'] == user_id:
-                    break
+        db = Database('users')
+        if fields.get('id'):
+            return db.update(fields)
         else:
-            user_id = self._generate_user_id(users)
-            fields['id'] = user_id
-            self.db.add(fields)
+            return db.add(fields)
 
     def get_users(self, ident=None):
+        db = Database('users')
         if ident:
-            return self.db.get_by_id(ident)
+            return db.get_by_id(ident)
         else:
-            return self.db.get_all()
+            return db.get_all()
 
-    def patch_user(self, user_id, updated_fields):
-        users = self.db.get_all()
-        for user in users:
-            if user['id'] == user_id:
-                user.update(updated_fields)
-                self.db.update(user)
+    def patch_user(self, fields: dict):
+        db = Database('users')
+        if fields.get('id'):
+            user = db.get_by_id(fields['id'])
+            if user:
+                return db.update(fields)
+            else:
+                raise Exception('Użytkownik o podanym ID nie istnieje')
+        else:
+            return db.add(fields)
 
     def delete_user(self, ident):
-        self.db.delete(ident)
-
-    def _generate_user_id(self, users):
-        if not users:
-            return 1
-
-        max_id = max(users, key=lambda user: user.get('id', 0)).get('id', 0)
-        return max_id + 1
+        db = Database('users')
+        return db.delete(ident)
 
     def save_note(self, fields: dict):
-        note_id = fields.get('id')
-        notes = self.db.get_all()
-
-        if note_id:
-            for note in notes:
-                if note['id'] == note_id:
-                    break
+        db = Database('notes')
+        if fields.get('id'):
+            return db.update(fields)
         else:
-            note_id = self._generate_note_id()
-            fields['id'] = note_id
-            self.db.add(fields)
+            return db.add(fields)
 
     def get_notes(self, ident=None):
+        db = Database('notes')
         if ident:
-            return self.db.get_by_id(ident)
+            return db.get_by_id(ident)
         else:
-            return self.db.get_all()
+            return db.get_all()
 
-    def patch_note(self, note_id, updated_fields):
-        notes = self.db.get_all()
-        for note in notes:
-            if note['id'] == note_id:
-                note.update(updated_fields)
-                self.db.update(note)
+    def patch_note(self, fields: dict):
+        db = Database('notes')
+        if fields.get('id'):
+            note = db.get_by_id(fields['id'])
+            if note:
+                return db.update(fields)
+            else:
+                raise Exception('Notatka o tym ID nie istnieje')
+        else:
+            return db.add(fields)
 
     def delete_notes(self, ident):
-        self.db.delete(ident)
-
-    def _generate_note_id(self, notes):
-        if not notes:
-            return 1
-
-        max_id = max(notes, key=lambda note: note.get('id', 0)).get('id', 0)
-        return max_id + 1
+        db = Database('notes')
+        return db.delete(ident)
