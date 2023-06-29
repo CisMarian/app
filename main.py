@@ -1,17 +1,10 @@
-import logging
-from flask import Flask
-
-app = Flask(__name__)
-
-logging.basicConfig(level=logging.INFO)
-
-log = logging.getLogger(__name__)
+from flask_app import create_app
+from app.localconfig import Config
+import localconfig
 
 
-def main():
-    log.info('Tutaj zdarzyło się coś')
-
+config = Config()
+application = create_app(localconfig.config)
 
 if __name__ == "__main__":
-    main()
-    app.run()
+    application.run(host='0.0.0.0')

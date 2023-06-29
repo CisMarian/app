@@ -1,20 +1,22 @@
 import logging
+import sys
+from logging.handlers import RotatingFileHandler
 
-logger = logging.getLogger('my_logger')
-logger.setLevel(logging.DEBUG)
 
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
+class Config(object):
+    log = logging.getLogger()
+    handler = RotatingFileHandler(
+        './example.log',
+        maxBytes=1000000,
+        backupCount=5
+    )
+    std_out_handler = logging.StreamHandler(sys.stdout)
 
-file_handler = logging.FileHandler('app.log')
-file_handler.setLevel(logging.DEBUG)
-
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-
-console_handler.setFormatter(formatter)
-file_handler.setFormatter(formatter)
-
-logger.addHandler(console_handler)
-logger.addHandler(file_handler)
+    formatter = logging.Formatter(
+        '[%(asctime)s] %(name)s - %(levelname)s: %(message)s'
+    )
+    handler.setFormatter(formatter)
+    std_out_handler.setFormatter(formatter)
+    log.setLevel(logging.DEBUG)
+    log.addHandler(handler)
+    log.addHandler(std_out_handler)
