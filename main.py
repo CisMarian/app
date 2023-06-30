@@ -1,7 +1,10 @@
-from flask import Flask
+from flask_app import create_app
+from app.localconfig import Config
+import localconfig
 
-app = Flask(__name__)
 
+config = Config()
+application = create_app(localconfig.config)
 
 if __name__ == "__main__":
-    app.run()
+    application.run(host='0.0.0.0')
