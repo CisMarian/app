@@ -1,7 +1,7 @@
-import logging
 from tools.jsondb import Database
+import logging
 
-logging.basicConfig(level=logging.INFO)
+
 log = logging.getLogger(__name__)
 
 

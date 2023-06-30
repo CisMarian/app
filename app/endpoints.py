@@ -1,9 +1,8 @@
-import logging
 from flask import request
 from flask_restful import Resource
 from services import Services
+import logging
 
-logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
 services = Services()

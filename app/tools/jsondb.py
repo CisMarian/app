@@ -5,7 +5,7 @@ class Database:
     def __init__(self, name_space):
         self.name_space = name_space
         self.files = {}
-        self._load_file(name_space)
+        self._load_file()
 
     def create(self):
         self.files[self.name_space] = []
@@ -62,12 +62,12 @@ class Database:
             self.files[self.name_space] = []
 
     def _save_file(self):
-        filename = self._get_file_name()
+        filename = self._get_file_name(self.name_space)
         try:
             with open(filename, 'w') as file:
                 json.dump(self.files[self.name_space], file, indent=2)
         except OSError:
-            OSError("Plik {} już istnieje.".format(filename))
+            raise OSError("Plik {} już istnieje.".format(filename))
 
     def _get_file_name(self):
         return '.'.join([self.name_space, 'json'])
