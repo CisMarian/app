@@ -11,7 +11,7 @@ def create_app(config=None):
     with app.app_context():
         api.app = app
 
-        # from .app import routes
+        from .app import routes
 
         api.init_app(app)
         return app
