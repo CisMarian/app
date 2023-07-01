@@ -1,5 +1,6 @@
 from flask import request
-from marshmallow import Schema, fields, ValidationError
+from marshmallow import ValidationError
+from my_schema import NoteInputSchema, UserInputSchema
 from flask_restful import Resource
 from services import Services
 import logging
@@ -7,17 +8,6 @@ import logging
 log = logging.getLogger(__name__)
 
 services = Services()
-
-
-class NoteInputSchema(Schema):
-    title = fields.String(required=True)
-    content = fields.String(required=True)
-
-
-class UserInputSchema(Schema):
-    username = fields.String(required=True)
-    email = fields.Email(required=True)
-    password = fields.String(required=True)
 
 
 class Notes(Resource):
