@@ -1,4 +1,6 @@
 from flask import request
+from marshmallow import ValidationError
+from my_schema import NoteInputSchema, UserInputSchema
 from flask_restful import Resource
 from .services import Services
 import logging
@@ -16,26 +18,34 @@ class Notes(Resource):
 
     def post(self):
         log.info('zapisano notatkę')
-        services.save_note(request.json)
-        return {
-            "message": "Dodaj notatkę"
-        }
+        try:
+            data = NoteInputSchema().load(request.json)
+            services.save_note(data)
+            return {
+                "message": "Dodaj notatkę"
+            }
+        except ValidationError as e:
+            return {
+                'error', str(e)
+            }, 400
 
 
 class Note(Resource):
     def get(self, note_id):
         log.info('Pobrano informację o notatce{}'.format(note_id))
-        return {
-            "message": "Pobierz informacje o notatce {}".format(note_id)
-        }
 
     def patch(self, note_id):
         log.info('Zaktualizowano rekord{}'.format(note_id))
-        updated_fields = request.json
-        services.patch_note(note_id, updated_fields)
-        return {
-            "message": "Zaktualizuj rekord {}".format(note_id)
-        }
+        try:
+            data = NoteInputSchema().load(request.json)
+            services.patch_note(note_id, data)
+            return {
+                "message": "Zaktualizuj rekord {}".format(note_id)
+            }
+        except ValidationError as e:
+            return {
+                'error': str(e)
+            }, 400
 
     def delete(self, note_id):
         log.info('Usunięto notatkę {}'.format(note_id))
@@ -53,26 +63,34 @@ class Users(Resource):
 
     def post(self):
         log.info('Pobrano użytkownika')
-        services.save_user(request.json)
-        return {
-            "message": "Dodaj użytkownika"
-        }
+        try:
+            data = UserInputSchema().load(request.json)
+            services.save_user(data)
+            return {
+                "message": "Dodaj użytkownika"
+            }
+        except ValidationError as e:
+            return {
+                'error': str(e)
+            }, 400
 
 
 class Profile(Resource):
     def get(self, user_id):
         log.info('Pobrano informację o użytkowniku {}'.format(user_id))
-        return {
-            "message": "Pobierz informacje o użytkowniku {}".format(user_id)
-        }
 
     def patch(self, user_id):
         log.info('Zaktualizowano profil użytkownika {}'.format(user_id))
-        updated_fields = request.json
-        services.patch_user(user_id, updated_fields)
-        return {
-            "message": "Zaktualizuj profil użytkownika {}".format(user_id)
-        }
+        try:
+            data = UserInputSchema().load(request.json)
+            services.patch_user(user_id, data)
+            return {
+                "message": "Zaktualizuj profil użytkownika {}".format(user_id)
+            }
+        except ValidationError as e:
+            return {
+                'error': str(e)
+            }, 400
 
     def delete(self, user_id):
         log.info('Usunięto użytkownika {}'.format(user_id))
