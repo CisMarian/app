@@ -62,7 +62,7 @@ class Database:
             self.files[self.name_space] = []
 
     def _save_file(self):
-        filename = self._get_file_name(self.name_space)
+        filename = self._get_file_name()
         try:
             with open(filename, 'w') as file:
                 json.dump(self.files[self.name_space], file, indent=2)
