@@ -1,4 +1,4 @@
-from tools.jsondb import Database
+from .tools.jsondb import Database
 import logging
 
 

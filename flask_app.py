@@ -11,9 +11,9 @@ def create_app(config=None):
     app.config.from_object(config)
     with app.app_context():
         api.app = app
-        api.add_resource(Note, '/note/<int:note_id')
+        api.add_resource(Note, '/note/<int:note_id>')
         api.add_resource(Notes, '/notes')
         api.add_resource(Users, '/users')
-        api.add_resource(Profile, '/profile/<int:user_id')
+        api.add_resource(Profile, '/profile/<int:user_id>')
         api.init_app(app)
         return app
