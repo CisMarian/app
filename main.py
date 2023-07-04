@@ -1,10 +1,8 @@
 from flask_app import create_app
-from app.localconfig import Config
-import localconfig
+from .app import localconfig
 
 
-config = Config()
-application = create_app(localconfig.config)
+application = create_app(localconfig.Config())
 
 if __name__ == "__main__":
-    application.run(host='0.0.0.0')
+    application.run(host='0.0.0.0', port=7002)
